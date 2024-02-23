@@ -53,3 +53,20 @@ def login(request):
     else:
         form = AuthenticationForm()
         return render(request, 'login.html', { 'form': form })
+    
+def logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect('signup/')
+    else:
+        form = UserCreationForm()
+        return render(request, 'signup.html', { 'form': form })
