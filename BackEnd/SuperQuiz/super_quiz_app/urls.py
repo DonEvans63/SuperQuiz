@@ -9,4 +9,5 @@ urlpatterns = [
     path("", views.home, name="home"),
     # path("super_quiz_app", IndexView.as_view, name="index"),
     path("<int:pk>/", QuestionDetailView.as_view(), name="question_detail"),
+    path('login/', views.login, name="login"),
 ]
