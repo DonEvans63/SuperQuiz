@@ -21,3 +21,5 @@ class QuestionDetailView(DetailView):
     # def question_list(request):
     # questions = Question.objects.all()
     # return render(request, 'quizes/question_list.html', {'questions': questions})
+def home(request):
+    return render(request, "home.html")
