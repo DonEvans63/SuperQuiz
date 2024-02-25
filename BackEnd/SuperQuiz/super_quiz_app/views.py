@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, Http404
 from django.http import HttpResponseRedirect, HttpResponse
 
 from .models import Question, Choice
@@ -42,7 +42,12 @@ def question_detail(request, question_id):
     render template
 
     """
-    return HttpResponse("You're looking at question %s." % question_id)
+    # return HttpResponse("You're looking at question %s." % question_id)
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, "quiz/question_detail.html", {"question": question})
 
 
 
