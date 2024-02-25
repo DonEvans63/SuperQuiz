@@ -1,5 +1,6 @@
-from django.shortcuts import render, Http404
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 
 from .models import Question, Choice
 from django.utils import timezone
@@ -40,17 +41,25 @@ def question_detail(request, question_id):
         save quiz 
     else show the blank form
     render template
-
     """
-    # return HttpResponse("You're looking at question %s." % question_id)
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
-    return render(request, "quiz/question_detail.html", {"question": question})
-
-
-
+    if request.method == 'POST':
+        try:
+            question = Question.objects.get(pk=question_id)
+            choice_id = request.POST.get('choice_id');
+            ch = Choice.objects.get(pk=choice_id)
+        except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+             return render(request, 'quiz/question_detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
+            }) 
+        return render(request, "quiz/question_detail.html", {"question": question, "isCorrect": ch.is_correct})
+    else:
+        try:
+            question = Question.objects.get(pk=question_id)
+        except Question.DoesNotExist:
+            raise Http404("Question does not exist")
+        return render(request, "quiz/question_detail.html", {"question": question})
 
 
 def home(request):
