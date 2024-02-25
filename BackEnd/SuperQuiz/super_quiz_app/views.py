@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 from .models import Question, Choice
 from django.utils import timezone
@@ -13,20 +13,41 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 
-class QuestionDetailView(DetailView):
-    model = Question
-    template_name = 'quiz/question_detail.html'
-    context_object_name = 'question'
 
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
+# class QuestionDetailView(DetailView):
+#     model = Question
+#     template_name = 'quiz/question_detail.html'
+#     context_object_name = 'question'
+
+#     def get_queryset(self):
+#         """
+#         Excludes any questions that aren't published yet.
+#         """
+#         return Question.objects.filter(pub_date__lte=timezone.now())
     
     # def question_list(request):
     # questions = Question.objects.all()
     # return render(request, 'quizes/question_list.html', {'questions': questions})
+
+def question_detail(request, question_id):
+    """
+    pull question from DB
+    need model form
+    if user submitted answer
+        process request
+        verify if answer is correct
+        update total on quiz accordingly
+        save quiz 
+    else show the blank form
+    render template
+
+    """
+    return HttpResponse("You're looking at question %s." % question_id)
+
+
+
+
+
 def home(request):
     return render(request, "home.html")
 
