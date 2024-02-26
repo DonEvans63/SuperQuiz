@@ -15,20 +15,6 @@ from django.utils.decorators import method_decorator
 
 
 
-# class QuestionDetailView(DetailView):
-#     model = Question
-#     template_name = 'quiz/question_detail.html'
-#     context_object_name = 'question'
-
-#     def get_queryset(self):
-#         """
-#         Excludes any questions that aren't published yet.
-#         """
-#         return Question.objects.filter(pub_date__lte=timezone.now())
-    
-    # def question_list(request):
-    # questions = Question.objects.all()
-    # return render(request, 'quizes/question_list.html', {'questions': questions})
 
 def question_detail(request, question_id):
     """
@@ -75,33 +61,32 @@ def login(request):
             user = authenticate(username=u, password=p)
             if user is not None:
                 if user.is_active:
-                    login(request, user)
-                    return HttpResponseRedirect(f'/user/{u}')
+                    print(f'{u} - account is active')
+                    return HttpResponseRedirect('/home')
                 else:
                     print(f'{u} - account has been disabled')
                     return HttpResponseRedirect('/login')
             else:
-                print('The username and/or password is incorrect')
+                print('The username and/or password is none')
                 return HttpResponseRedirect('/login')
         else:
+            print('The username and/or password is not valid')
             return HttpResponseRedirect('/login')
     else:
         form = AuthenticationForm()
         return render(request, 'login.html', { 'form': form })
     
 def logout(request):
-    logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/login')
 
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return HttpResponseRedirect('/')
+            form.save()
+            return HttpResponseRedirect('/login')
         else:
-            return HttpResponseRedirect('signup/')
+            return render(request, 'signup.html', { 'form': form })
     else:
         form = UserCreationForm()
         return render(request, 'signup.html', { 'form': form })
