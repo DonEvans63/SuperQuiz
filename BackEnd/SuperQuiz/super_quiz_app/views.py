@@ -90,3 +90,8 @@ def signup(request):
     else:
         form = UserCreationForm()
         return render(request, 'signup.html', { 'form': form })
+    
+@login_required
+def profile(request, username):
+    user = User.objects.get(username=username)
+    return render(request, 'profile.html', { 'user': user })
