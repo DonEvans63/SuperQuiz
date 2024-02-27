@@ -1,20 +1,41 @@
+<div class='divQuestion jumbotron container-fluid mt-0 mb-0' style="color:black; background-color:white">
+    <h1>{{ question.question_text }}</h1>
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    <div class='paragraphs container-fluid' style="display: flex; justify-content: center; margin-top: 150px;"> <!-- Added margin-top: 20px -->
+        <form action="{% url 'question_detail' 2%}" method="post">
+            {% csrf_token %}
+            {% for choice in question.choice_set.all %}
+                <label style="margin-right: 10px;">
+                    <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
+                    {{ choice.choice_text }}
+                </label>
+            {% endfor %}
+            <input type="hidden" name="choice_id" id="choice_id">
+            <input type="submit" value="Submit" style="margin-right: 10px;">
+        </form>
+    </div>
+    <p><strong>{{ isCorrect }}</strong></p>
+</div>
+
+<div class='nextDiv'>
+    <button class='next'>NEXT QUESTION</button>
+</div>
 
 
-<h1>{{ question.question_text }}</h1>
-{% if error_message %}
-    <p><strong>{{ error_message }}</strong></p>
-{% endif %}
 
-<form action="{% url 'question_detail' question.id %}" method="post">
-    {% csrf_token %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
-        <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
-    {% endfor %}
-    <input type="hidden" name="choice_id" id="choice_id">
-    <input type="submit" value="Submit">
-</form>
-<p><strong>{{ isCorrect }}</strong></p>
+<style>
+    .divQuestion {
+    height: 200px;
+    font-size: 50px;
+    color: black;
+    text-align: center;
+    padding-bottom: 10px;
+    font-family: cursive;
+    font-weight: 800;
+}
+</style>
 
 <script>
     document.querySelectorAll('input[type="radio"]').forEach(function(radio) {
