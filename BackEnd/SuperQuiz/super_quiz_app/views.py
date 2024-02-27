@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from django.contrib.auth import login as auth_login 
 
 
 
@@ -63,8 +63,8 @@ def login(request):
             user = authenticate(username=u, password=p)
             if user is not None:
                 if user.is_active:
-                    print(f'{u} - account is active')
-                    return HttpResponseRedirect('/home')
+                    auth_login(request, user)
+                    return redirect('profile', username=u)
                 else:
                     print(f'{u} - account has been disabled')
                     return HttpResponseRedirect('/login')
