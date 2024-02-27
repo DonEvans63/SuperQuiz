@@ -1,17 +1,19 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from .forms import EditProfileForm
 
 from .models import Question, Choice
 from django.utils import timezone
 from django.views.generic import DetailView
 
 #imports for authentication
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
 
 
 
@@ -95,3 +97,14 @@ def signup(request):
 def profile(request, username):
     user = User.objects.get(username=username)
     return render(request, 'profile.html', { 'user': user })
+
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('profile', kwargs={'username': request.user.username}))  # Redirect to the user's profile page
+    else:
+        form = EditProfileForm(instance=request.user)
+    return render(request, 'edit_profile.html', {'form': form})
