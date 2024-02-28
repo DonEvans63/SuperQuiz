@@ -1,5 +1,53 @@
-{% block content %}
+<!-- {% block content %}
 
 <h1> Welcome to Super Quiz</h1>
 
-{% endblock %}
+{% endblock %} -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Super Quiz</title>
+</head>
+
+<body>
+    <div class="w3-top">
+        <div class="w3-bar w3-black w3-card">
+          <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+          <a href="{% url 'profile' username=user.username %}" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Profile</a>
+          <a href="/logout" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Logout</a>
+         
+          <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"></i></a>
+        </div>
+      </div>
+  <header class='cover'>
+    <h1 class="display-4 jumbotron container-fluid bg-white mb-2 text-center" style="color:rgb(20, 94, 114); font-weight: 900;">
+      WELCOME TO SUPER QUIZ</h1>
+  </header>
+  <section class="cover jumbotron container-fluid mt-1 mb-0" style="color:white; background-color:rgb(20, 94, 114)">
+    <h2 class="text-center">Test Your Trivia Knowledge</h2>
+    <div class="row justify-content-center mx-0 mt-5">
+      <h4 class="col-lg-8 text-center pb-5">When you're ready to play you can click on the "Play" button. A
+        random series of questions will appear. Select an answer, a message will appear letting you know if you have
+        answered correctly. Then, click on the "Next" button to move on to the next question.</h4>
+    </div>
+    <div class="mt-0">
+      <div class="playBtnDiv row d-flex justify-content-center">
+        <a href="{% url 'random_question' %}">
+          <button class="playBtn btn-lg mx-2  mb-2 mb-md-0"
+                  style="background-color:white; color:rgb(20, 94, 114); font-weight: bolder;"
+                  type="button">PLAY
+          </button>
+      </a>
+        
+      </div>

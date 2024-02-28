@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    /* Embedded CSS */
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust the height as needed */
+    }
+
+    /* Adjust the width of the card container */
+    .card-container {
+        width: 60%; /* Adjust the width as needed */
+    }
+
+
+/* Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+
+<div class="center">
+    <div class="w3-third">
+        <div class="w3-white w3-text-grey w3-card-4">
+            <div class="w3-display-container">
+               
+                <div class="w3-display-bottomleft w3-container w3-text-black">
+                   
+                </div>
+            </div>
+            <div class="w3-container">
+                <h2>{{ user.username }}'s Profile</h2>
+                <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Student</p>
+                <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>Austin, Tx</p>
+                <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ user.username }}</p>
+                
+                <!-- "Edit Profile" button styled anchor tag -->
+                <a href="{% url 'edit_profile' %}" class="btn btn-secondary" role="button">Edit Profile</a>
+                
+                <hr>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

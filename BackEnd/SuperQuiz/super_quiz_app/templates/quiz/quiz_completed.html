@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Completed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.3/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="display-4">Congratulations!</h1>
+        <p class="lead">You have completed the quiz.</p>
+        <hr>
+        <p>
+            Thank you for participating. You can go back to the home page or start a new quiz.
+        </p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Home Page</a>
+        <a href="{% url 'start_quiz' %}" class="btn btn-success">Start New Quiz</a>
+    </div>
+</body>
+</html>
