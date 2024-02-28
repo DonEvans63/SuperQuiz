@@ -19,36 +19,36 @@ from django.contrib.auth import login as auth_login
 
 
 
-def question_detail(request, question_id):
-    """
-    pull question from DB
-    need model form
-    if user submitted answer
-        process request
-        verify if answer is correct
-        update total on quiz accordingly
-        save quiz 
-    else show the blank form
-    render template
-    """
-    if request.method == 'POST':
-        try:
-            question = Question.objects.get(pk=question_id)
-            choice_id = request.POST.get('choice_id');
-            ch = Choice.objects.get(pk=choice_id)
-        except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-             return render(request, 'quiz/question_detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-            }) 
-        return render(request, "quiz/question_detail.html", {"question": question, "isCorrect": ch.is_correct})
-    else:
-        try:
-            question = Question.objects.get(pk=question_id)
-        except Question.DoesNotExist:
-            raise Http404("Question does not exist")
-        return render(request, "quiz/question_detail.html", {"question": question})
+# def question_detail(request, question_id):
+#     """
+#     pull question from DB
+#     need model form
+#     if user submitted answer
+#         process request
+#         verify if answer is correct
+#         update total on quiz accordingly
+#         save quiz 
+#     else show the blank form
+#     render template
+#     """
+#     if request.method == 'POST':
+#         try:
+#             question = Question.objects.get(pk=question_id)
+#             choice_id = request.POST.get('choice_id');
+#             ch = Choice.objects.get(pk=choice_id)
+#         except (KeyError, Choice.DoesNotExist):
+#         # Redisplay the question voting form.
+#              return render(request, 'quiz/question_detail.html', {
+#             'question': question,
+#             'error_message': "You didn't select a choice.",
+#             }) 
+#         return render(request, "quiz/question_detail.html", {"question": question, "isCorrect": ch.is_correct})
+#     else:
+#         try:
+#             question = Question.objects.get(pk=question_id)
+#         except Question.DoesNotExist:
+#             raise Http404("Question does not exist")
+#         return render(request, "quiz/question_detail.html", {"question": question})
 
 
 
