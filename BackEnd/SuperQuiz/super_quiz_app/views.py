@@ -1,8 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse,  Http404
 from django.urls import reverse
 
+# from django.http import Http404
+
 from .models import Question, Choice
+# -------
+import random
+# -----
 from django.utils import timezone
 from django.views.generic import DetailView
 
@@ -60,8 +65,40 @@ def question_detail(request, question_id):
         except Question.DoesNotExist:
             raise Http404("Question does not exist")
         return render(request, "quiz/question_detail.html", {"question": question})
+    
+    
+def random_question(request):
+    feedback = None  # Initialize feedback
+    if request.method == "POST":
+        # Extracting 'question_id' from the form
+        question_id = request.POST.get('question_id')
+        selected_choice_id = request.POST.get('choice')
 
+        if question_id and selected_choice_id:
+            question = get_object_or_404(Question, pk=question_id)
+            selected_choice = question.choice_set.filter(pk=selected_choice_id).first()
 
+            if selected_choice and selected_choice.is_correct:
+                feedback = "Correct!"
+            else:
+                feedback = "Incorrect. Please try again."
+
+    # Select a new random question different from the last question
+    last_question_id = request.session.get('last_question_id')
+    question_ids = Question.objects.exclude(id=last_question_id).values_list('id', flat=True)
+    if question_ids:
+        random_id = random.choice(list(question_ids))
+        question = Question.objects.get(id=random_id)
+        request.session['last_question_id'] = question.id  # Update the session
+    else:
+        question = None  # Handle the case when there are no questions
+
+    return render(request, 'quiz/random_question.html', {
+        'question': question,
+        'feedback': feedback
+    })
+
+    
 def home(request):
     return render(request, "home.html")
 
@@ -76,7 +113,7 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(f'/user/{u}')
+                    return redirect('home', username=u)
                 else:
                     print(f'{u} - account has been disabled')
                     return HttpResponseRedirect('/login')
@@ -105,3 +142,7 @@ def signup(request):
     else:
         form = UserCreationForm()
         return render(request, 'signup.html', { 'form': form })
+
+
+#  get_object_or_404
+
