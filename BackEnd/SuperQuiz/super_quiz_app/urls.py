@@ -10,5 +10,6 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('users/<username>/', views.profile, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
-
+    path('profile/delete/', views.delete_profile, name='delete_profile'),
+    path('random/', views.random_question, name='random_question'),
 ]

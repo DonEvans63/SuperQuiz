@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Question</title>
+</head>
+<body>
+    <h1>{{ question.question_text }}</h1>
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    <form action="{% url 'random_question' %}" method="post">
+        {% csrf_token %}
+        <!-- Include hidden input for question_id -->
+        <input type="hidden" name="question_id" value="{{ question.id }}">
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
+            <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+        {% if feedback %}
+        <p>{{ feedback }}</p>
+    {% endif %}
+    <!-- <button onclick="window.location.href='{% url 'random_question'%}'">Next Question</button> -->
+</body>
+</html>
