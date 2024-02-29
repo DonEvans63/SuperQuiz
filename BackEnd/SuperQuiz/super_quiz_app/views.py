@@ -98,7 +98,7 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     auth_login(request, user)
-                    return redirect('profile', username=u)
+                    return redirect('', username=u)
                 else:
                     print(f'{u} - account has been disabled')
                     return HttpResponseRedirect('/login')
