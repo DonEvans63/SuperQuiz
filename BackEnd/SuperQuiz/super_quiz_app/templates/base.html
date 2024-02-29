@@ -1,12 +1,7 @@
 <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Quiz</title>
-</head>
-<body>
-    <h1>Super Quiz</h1>
+<title>Super Quiz</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -16,6 +11,19 @@
 body {font-family: "Lato", sans-serif}
 .mySlides {display: none}
 </style>
+</head>
+<body>
+    <!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href="" class="w3-bar-item w3-button w3-padding-large">Home</a>
+      <a href="users/<username>/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Profile</a>
+      <a href="/logout" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Logout</a>
+     
+      <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
+    </div>
+  </div>
     <header>
         {% if use.is_authenticated%}
             <span><a href="/user/{{ user.username }}">Hello, {{ user.username }} |</a></span>
