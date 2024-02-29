@@ -1,4 +1,30 @@
-<!DOCTYPE html>
+
+ <!-- <h1>{{ question.question_text }}</h1>
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+å
+<form action="{% url 'question_detail' question.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
+        <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+    <input type="hidden" name="choice_id" id="choice_id">
+    <input type="submit" value="Submit">
+</form>
+<p><strong>{{ isCorrect }}</strong></p>
+
+<script>
+    document.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            document.getElementById('choice_id').value = this.value;
+        });
+    });
+</script> -->
+
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,34 +61,5 @@
         });
     </script>
 </body>
-</html> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style>
-    .divQuestion {
-    height: 200px;
-    font-size: 50px;
-    color: black;
-    text-align: center;
-    padding-bottom: 10px;
-    font-family: cursive;
-    font-weight: 800;
-}
-</style>
+</html>  
 
