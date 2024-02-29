@@ -63,7 +63,7 @@ def generate_quiz(num_questions):
 
 def start_quiz(request):
     # Generate a random quiz of 10 questions
-    random_questions = generate_quiz(3)
+    random_questions = generate_quiz(5)
     request.session['quiz_questions'] = [q.id for q in random_questions]  # Save question IDs in session
     request.session['current_question_index'] = 0  # Initialize question index
 
