@@ -16,28 +16,54 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Random Question</title>
 </head>
+<style>
+    body {
+        background-color: cornflowerblue;
+    }
+
+    .divQuestion {
+        font-size: 50px;
+        text-align: center;
+        margin: 50px 150px;
+    }
+
+    .paragraphs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    color: indigo;
+    align-items: first baseline;
+    justify-content: space-evenly;
+}
+
+</style>
+
 <body>
-    <h1>{{ question.question_text }}</h1>
+    <h1 class='divQuestion jumbotron mb-0' style="color:indigo; background-color:peru">{{ question.question_text }}</h1>
     {% if error_message %}
-        <p><strong>{{ error_message }}</strong></p>
+    <p><strong>{{ error_message }}</strong></p>
     {% endif %}
-    <form action="{% url 'random_question' %}" method="post">
-        {% csrf_token %}
-        <!-- Include hidden input for question_id -->
-        <input type="hidden" name="question_id" value="{{ question.id }}">
-        {% for choice in question.choice_set.all %}
-            <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
+    <div class='paragraphs container-fluid'>
+        <form action="{% url 'random_question' %}" method="post">
+            {% csrf_token %}
+            <!-- Include hidden input for question_id -->
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            {% for choice in question.choice_set.all %}
+            <input class=type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
             <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
-        {% endfor %}
-        <input type="submit" value="Submit">
-    </form>
+            {% endfor %}
+            <input type="submit" value="Submit">
+            <button onclick="window.location.href='{% url 'random_question'%}'">Next Question</button>
+        </form>
         {% if feedback %}
         <p>{{ feedback }}</p>
-    {% endif %}
-    <button onclick="window.location.href='{% url 'random_question'%}'">Next Question</button>
+        {% endif %}
+    </div>
 </body>
+
 </html>
