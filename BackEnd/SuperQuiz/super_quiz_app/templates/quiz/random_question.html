@@ -1,16 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
     <meta charset="UTF-8">
     <title>Random Question</title>
 </head>
-
 <style>
     body {
-        background-color: cornflowerblue;
+        background-color: rgb(57, 143, 166);
     }
 
     .divQuestion {
@@ -23,33 +19,88 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    color: indigo;
+    color: black;
     align-items: first baseline;
     justify-content: space-evenly;
 }
 
+.choices-container {
+            /* padding-top: 50px;
+            text-align: left;
+            content: center;
+            align-content: center; */
+        }
+
+        /* .choices {
+            display: inline-block;
+            text-align: left;
+            padding-top: 30px;
+        }
+
+        .choice-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 50px;
+        } */
+
+        /* Style the "New Question" button */
+        .new-question-button {
+            background-color: white; /* Green */
+            border: none;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            font-size: 16px;
+            margin-top: 35px; /* Adjust the margin as needed */
+            cursor: pointer;
+        }
 </style>
 
 <body>
-    <h1 class='divQuestion jumbotron mb-0' style="color:indigo; background-color:peru">{{ question.question_text }}</h1>
+    <h1 class='divQuestion jumbotron mb-0' style="color:black;">{{ question.question_text }}</h1>
     {% if error_message %}
     <p><strong>{{ error_message }}</strong></p>
     {% endif %}
-    <div class='paragraphs container-fluid'>
+    <div class="choices-container">
+        <div>
         <form action="{% url 'random_question' %}" method="post">
             {% csrf_token %}
-            <!-- Include hidden input for question_id -->
-            <input type="hidden" name="question_id" value="{{ question.id }}">
             {% for choice in question.choice_set.all %}
-            <input class=type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
-            <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
+                {% if answer_disabled %}
+                    <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}" disabled>
+                {% else %}
+                    <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
+                {% endif %}
+                    <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
             {% endfor %}
-            <input type="submit" value="Submit">
-            <button onclick="window.location.href='{% url 'random_question'%}'">Next Question</button>
+
+            {% if answer_disabled %}
+                <input type="submit" disabled></input>
+            {% else %}
+                <input type="submit"></input>
+            {% endif %}
         </form>
-        {% if feedback %}
-        <p>{{ feedback }}</p>
-        {% endif %}
     </div>
+    {% if feedback %}
+    {{ feedback }}
+    <form action="{% url 'random_question' %}" method="get">
+        {% if answer_disabled %}
+            <button type="submit">New Question</button>
+        {% else %}
+            <button type="submit" disabled>New Question</button>
+        {% endif %}
+    </form>         
+    {% endif %}
+    <script>
+        document.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                document.getElementById('choice_id').value = this.value;
+            });
+        });
+    </script>    
+</div>
 </body>
 </html>

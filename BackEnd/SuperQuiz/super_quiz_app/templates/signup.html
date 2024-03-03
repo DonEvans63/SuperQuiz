@@ -1,9 +1,63 @@
-{% block content %}
-<h1>Signup</h1>
-<form action="." method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Submit</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: rgb(20, 94, 114);
+    }
 
-{% endblock %}
+    .card {
+      width: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid black;
+      background-color: aliceblue;
+    }
+
+    .card h1 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .card form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card form input[type="text"],
+    .card form input[type="password"],
+    .card form button {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid black;
+      font-size: 16px;
+    }
+
+    .card form button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Login</h1>
+    <h1>Signup</h1>
+        <form action="." method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
