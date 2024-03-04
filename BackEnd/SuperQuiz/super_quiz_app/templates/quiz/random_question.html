@@ -24,26 +24,6 @@
     justify-content: space-evenly;
 }
 
-.choices-container {
-            /* padding-top: 50px;
-            text-align: left;
-            content: center;
-            align-content: center; */
-        }
-
-        /* .choices {
-            display: inline-block;
-            text-align: left;
-            padding-top: 30px;
-        }
-
-        .choice-label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 50px;
-        } */
-
-        /* Style the "New Question" button */
         .new-question-button {
             background-color: white; /* Green */
             border: none;
@@ -69,12 +49,8 @@
         <form action="{% url 'random_question' %}" method="post">
             {% csrf_token %}
             {% for choice in question.choice_set.all %}
-                {% if answer_disabled %}
-                    <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}" disabled>
-                {% else %}
-                    <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
-                {% endif %}
-                    <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
+            <input class='' type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
+            <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
             {% endfor %}
 
             {% if answer_disabled %}
