@@ -29,6 +29,7 @@ def quiz_completed(request, score):
     })  
 
 def random_question(request):
+
     if request.method == "POST":
         id = request.session.get('current_question_id')
         question = get_object_or_404(Question, pk=id)
@@ -37,7 +38,7 @@ def random_question(request):
         feedback = None
         if selected_choice.is_correct:
             feedback = "Correct!"
-            request.session['correct_answer_count'] = request.session.get('correct_answer_count') + 1;
+            request.session['correct_answer_count'] = request.session.get('correct_answer_count') + 1
         else:
             feedback = "Incorrect."
         return render(request, 'quiz/random_question.html', {
@@ -49,7 +50,7 @@ def random_question(request):
     if request.session.get('session_end'):
         request.session['session_end'] = False
         score = request.session.get('correct_answer_count')
-        request.session['correct_answer_count'] = 0;
+        request.session['correct_answer_count'] = 0,
         return quiz_completed(request, score)
 
     if not request.session.get('quiz_questions'):
@@ -70,9 +71,11 @@ def random_question(request):
     return render(request, 'quiz/random_question.html', {
         'question': question,
         'feedback': None,
-        'answer_disabled' : False
+        'answer_disabled':False
     })
 
+
+# ---------------------------------------------------------------------------
 def home(request):
     return render(request, "home.html")
 
